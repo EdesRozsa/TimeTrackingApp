@@ -26,7 +26,6 @@ const App: React.FC = () => {
   const [selectedEntries, setSelectedEntries] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [editingEntry, setEditingEntry] = useState<string | null>(null);
-  const [showNotes, setShowNotes] = useState<{ [key: string]: boolean }>({});
   
   // State for settings
   const [settings, setSettings] = useState<AppSettings>({
@@ -311,6 +310,14 @@ const App: React.FC = () => {
           : b.projectName.localeCompare(a.projectName);
       }
       
+      if (sortField === 'notes') {
+        const aNotes = a.notes || '';
+        const bNotes = b.notes || '';
+        return sortDirection === 'asc'
+          ? aNotes.localeCompare(bNotes)
+          : bNotes.localeCompare(aNotes);
+      }
+      
       return 0;
     });
   };
@@ -416,13 +423,7 @@ const App: React.FC = () => {
     setManualNotes('');
   };
   
-  // Toggle notes visibility
-  const toggleNotes = (id: string) => {
-    setShowNotes(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
+
   
   // Export to CSV
   const exportToCSV = () => {
@@ -1124,7 +1125,23 @@ const App: React.FC = () => {
                     </span>
                   </th>
                   <th>Amount</th>
-                  <th>Notes</th>
+                  <th 
+                    role="button" 
+                    onClick={() => sortEntries('notes')}
+                    aria-label="Sort by notes"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        sortEntries('notes');
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    Notes
+                    <span className="sort-icon">
+                      {sortField === 'notes' && (sortDirection === 'asc' ? '↑' : '↓')}
+                    </span>
+                  </th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -1148,23 +1165,9 @@ const App: React.FC = () => {
                     <td>${(entry.rate / 2).toFixed(2)}</td>
                     <td>${((entry.hours + entry.minutes / 60) * (entry.rate / 2)).toFixed(2)}</td>
                     <td>
-                      {entry.notes && (
-                        <>
-                          <Button
-                            variant="link"
-                            size="sm"
-                            onClick={() => toggleNotes(entry.id)}
-                            aria-label={`${showNotes[entry.id] ? 'Hide' : 'Show'} notes for ${entry.projectName}`}
-                          >
-                            {showNotes[entry.id] ? '▼ Hide' : '▶ Show'}
-                          </Button>
-                          {showNotes[entry.id] && (
-                            <div className="mt-2 p-2 bg-light rounded">
-                              {entry.notes}
-                            </div>
-                          )}
-                        </>
-                      )}
+                      <div className={entry.notes ? "notes-cell" : "text-muted"}>
+                        {entry.notes || "No notes"}
+                      </div>
                     </td>
                     <td>
                       <Button
