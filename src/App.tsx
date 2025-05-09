@@ -36,7 +36,6 @@ const App: React.FC = () => {
   const [selectedEntries, setSelectedEntries] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [editingEntry, setEditingEntry] = useState<string | null>(null);
-
   // State for settings
   const [settings, setSettings] = useState<AppSettings>({
     monthlyTargetAmount: 5000, // $2500 in half dollars
@@ -332,7 +331,6 @@ const App: React.FC = () => {
           ? a.projectName.localeCompare(b.projectName)
           : b.projectName.localeCompare(a.projectName);
       }
-
       return 0;
     });
   };
@@ -458,7 +456,6 @@ const App: React.FC = () => {
     setManualRate(40);
     setErrors({}); // Clear any errors
   };
-
   // Export to CSV
   const exportToCSV = () => {
     const headers = ["Project Name", "Hours", "Minutes", "Rate", "Date"];

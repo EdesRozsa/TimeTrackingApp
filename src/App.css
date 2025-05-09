@@ -193,4 +193,54 @@ th[role="button"] .sort-icon {
   .action-btn {
     width: 100%;
   }
+<<<<<<< HEAD
 }
+=======
+  
+  .stats-value {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  .entries-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .selected-row {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .notes-cell {
+    max-width: 250px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font-size: 0.9em;
+    max-height: 60px;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 768px) {
+    .data-actions {
+      flex-direction: column;
+    }
+    
+    .action-btn {
+      width: 100%;
+    }
+  }
+>>>>>>> a8e00fd656738575038371f806b778def7aad54f
