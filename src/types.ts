@@ -6,6 +6,7 @@ export interface TimeEntry {
     rate: number;
     date: string;
     dateObj: Date;
+    notes?: string;
   }
   
   export interface AppSettings {
